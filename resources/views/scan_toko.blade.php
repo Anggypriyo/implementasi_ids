@@ -217,7 +217,7 @@ function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
     function rata_accuracy(){
     //menambahkan accuracy toko dengan accuracy user
       var hassil = accuracy_toko+accuracy_user;
-    result_acc = hassil/2;
+        result_acc = hassil/2;
        console.log("rata-rata akurasi : ");
        console.log(result_acc);
     }

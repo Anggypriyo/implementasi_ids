@@ -35,16 +35,21 @@ class Cbarang extends Controller
     }
 
     public function printPDF(Request $request) {
-        $data = Barang::all();
-        $baris = $request->baris_barang;
-        $kolom = $request->kolom_barang;
-        $long = count($data);
-        $long =intval($long/5);
-        $long++;
-        $pdf = PDF::loadView('printBarcode', compact('data','long','baris','kolom'));
-    
+        $hasil = explode(",", $request->barang);
+        $barang = barang::whereIn('id_barang', $hasil)->get();
+        $baris = $request->baris;
+        $kolom = $request->kolom;
+        //dd($barang);
+        $pdf = PDF::loadView('printBarcode', compact('barang','baris','kolom'));
+        //$hasil = barang::whereIn('id_barang', $barang)->get();
+        //dd($hasil);
         return $pdf->stream('Barcode.pdf');
-       //return view('printBarcode', compact('data','long','baris','kolom'));
+        
+        /*return view('printBarcode',[
+            'barang' => barang::whereIn('id_barang', $barang)->get(),
+            'baris' => $request->baris,
+            'kolom' => $request->kolom,
+        ]);*/
      }
 
 }

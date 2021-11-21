@@ -16,7 +16,7 @@
     <div class="card-body">
         <h1 align="center">TABEL DATA BARANG </h1>
         <a href="{{ url('/tambahBarang') }}" class="btn btn-info btn-lg" >+Tambah Barang</a>
-        <button data-bs-toggle="modal" data-bs-target="#pdf" class="btn btn-info btn-lg">Cetak PDF</button>
+        <button data-bs-toggle="modal" data-bs-target="#printModal" class="btn btn-info btn-lg">Cetak PDF</button>
     </div>
     
     <div class="card-body">    
@@ -26,7 +26,7 @@
                 <td>ID</td>
                 <td>Nama Barang</td>
                 <td align="center">
-                      <input name="select_all" value="" id="example-select-all" type="checkbox" /></th>
+                      <input name="select_all" value="" id="select_all" type="checkbox" /></th>
                 </td>
             </tr>
         </thead>
@@ -39,9 +39,8 @@
                     echo $b->id_barang;
                     ?></td>
                 <td>{{ $b->nama }}</td>
-                <td align="center">
-                      <input name="select_fav" value="" id="generate" type="checkbox" /></th>
-                </td>
+                <td align="center"><input type="checkbox" class="select" value="{{ $b->id_barang }}"></td>
+            
             </tr>
             @endforeach
         </tbody>
@@ -49,6 +48,7 @@
             <tr>
                 <th>ID</th>
                 <th>Nama Barang</th>
+                <th></th>
             </tr>
         </tfoot>
     </table>
@@ -56,34 +56,32 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="pdf" tabindex="-1" role="dialog" aria-labelledby="pdfLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="pdfLabel">Start Export Barcode</h5>
-              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="{{ url('/printBarcode') }}" method="post" target="_blank">
-                @csrf
-                    <div class="form-group">
-                        <label for="baris_barang">Baris</label>
-                        <input type="number" class="form-control" id="baris_barang" placeholder="baris Barang" name="baris_barang" required >
-                    </div>
-                    <div class="form-group">
-                        <label for="kolom_barang">Kolom</label>
-                        <input type="number" class="form-control" id="kolom_barang" placeholder="kolom Barang" name="kolom_barang" required>
-                    </div>
-                    <button type="submit" class="btn btn-info">Simpan</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
+<div class="modal fade" id="printModal">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+						<form method="post" id="form" action="{{ url('/printBarcode') }}" target="_blank">
+						@csrf
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Cetak</h5>
+                                                        <button type="button" class="close" data-bs-dismiss="modal"><span>&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                        	    	<div class="form-group">
+                                            		    <input type="text" class="form-control input-default" id="kolom" name="kolom" placeholder="Kolom" required>
+                                        		</div>
+                                        		<div class="form-group">
+                                                	    <input type="text" class="form-control input-default" id="baris" name="baris" placeholder="Baris" required>
+                                        		</div>
+							<input type="hidden" id="barang" name="barang">
+						    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary" id="form">Save changes</button>
+                                                    </div>
+						</form>
+                                            </div>
+                                        </div>
 </div>
 @endsection
 
@@ -97,37 +95,31 @@
         $('#table1').DataTable();
     } 
 );
- $('#example-select-all').on('click', function(){
-      // Check/uncheck all checkboxes in the table
-      var rows = table.rows({ 'search': 'applied' }).nodes();
-      $('input[type="checkbox"]', rows).prop('checked', this.checked);
-   });
-   // Handle click on checkbox to set state of "Select all" control
-   $('#example_tbody').on('change', 'input[type="checkbox"]', function(){
-      // If checkbox is not checked
-      if(!this.checked){
-         var el = $('#example-select-all').get(0);
-         // If "Select all" control is checked and has 'indeterminate' property
-         if(el && el.checked && ('indeterminate' in el)){
-            // Set visual state of "Select all" control 
-            // as 'indeterminate'
-            el.indeterminate = true;
-         }
-      }
-   });
-   $('#generate').on('click', function(e){
-      var favorite = [];
-      var row =  Number(document.getElementById("row").value);
-      var col =  Number(document.getElementById("col").value);
-      $.each($("input[name='check']:checked"), function(){
-          favorite.push($(this).val());
-      });
-      parameter= "/"+ favorite.join()+"/"+col+"/"+row;
-      url= "{{url('/printBarcode')}}";
-      document.location.href=url+parameter;
-       e.preventDefault(); 
-   });
- });
+</script>
+<script>
+var count = 0;
+	$(document).ready(function() {
+	    $('#select_all').click(function(){
+		count = count + 1;
+		if(count % 2 != 0){
+		    $('.select').prop('checked',true);
+		}else{
+		    $('.select').prop('checked',false);
+		}
+	    });
+	    $('#form').submit(function(e){
+		var checkbox = $('.select:checked');
+		var val;
+		for(var i = 0; i < checkbox.length ; i++ ){
+		    if(i == 0){
+			val = checkbox[i].value;
+		    }else{
+			val = val + "," + checkbox[i].value;
+		    }
+		}
+		$('#barang').val(val);
+	    });
+	});
 
 </script>
 

@@ -35,6 +35,8 @@ Route::get('/tambahCustomer2', [Ccustomer::class,'tambahCustomer2']);
 Route::post('/tambahCustomer1/store1', [Ccustomer::class,'store1']);
 Route::post('/tambahCustomer2/store2', [Ccustomer::class,'store2']);
 
+Route::post('customer/export-excel',[Ccustomer::class,'importExcel']);
+
 
 Route::get('/barang', [Cbarang::class,'index']);
 Route::get('/tambahBarang', [Cbarang::class,'indexTambah']);

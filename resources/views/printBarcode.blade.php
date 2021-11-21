@@ -1,88 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
 <style>
+@page {
+  margin: 0cm;
+}
 </style>
+</head>
 <body>
-    <div class="halaman" style="margin-top:-23px;">
-        <table>
-            <?php
-            $stop=1;
-            $break =0;
-            $count = 0;
-            $col = 1; 
-            $kolom = (($baris-1)*5) + $kolom;
-            for($i=1; $i<=$long; $i++){
-            $stop = $i*5;
-            ?>
-            <tr>
-                
-                @foreach($data as $barangs)
-                @if($break < $stop)
-                @if($count <= $break)
-                <td>
-                     <div class="barcode" style="text-align:center;width:143px;height:63px;padding-top: 5px;margin-left:-35px;margin-right:44px;font-size:12px;margin-top:-18px">
-                    @if($i >= $baris AND $kolom <= $break)
-                     <div class="IsiBarcode" style="display:block">
-                        <?php
+
+    <?php $bool=false;
+     $max=count($barang);
+     $count=0; ?>
+    <table>
+	@for($i = 1;$i <= 8;$i++)
+	<tr>
+	    @for($j = 1;$j <= 5;$j++)
+	    <td style="">
+		@if($i == $baris && $j == $kolom)
+		<?php $bool=true; ?>
+		@endif
+		@if($bool)
+		<div style="text-align: center;width: 130px;height: 53px;margin-right: 15px;margin-bottom: 16px;">
+        <?php
                              $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
-                             echo '<img style="width: 125px;" src="data:image/png;base64,' . base64_encode($generator->getBarcode($barangs->id_barang, $generator::TYPE_CODE_128)) . '">';                                    
-                             /*
-                             $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
-                             echo $generator->getBarcode($barangs->id_barang, $generator::TYPE_CODE_128);
-                             */
-                            ?>
-                            <!--
-                            <div class="nomor" style="text-align:left">
-                                <?='('.$i.','.$col.')'?>
-                            </div>
-            -->
-                             <?=$barangs->id_barang?>
-                             <br>
-                             <?= $barangs->nama?>
-                             <?php $col++;?>
-                     </div>
-                     @else
-                     <div class="IsiBarcode" style="display:none">
-                         <?php
-                             $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
-                             echo '<img style="width: 135px;" src="data:image/png;base64,' . base64_encode($generator->getBarcode($barangs->id_barang, $generator::TYPE_CODE_128)) . '">';                                    
+                             echo '<img style="width: 125px;" src="data:image/png;base64,' . base64_encode($generator->getBarcode($barang[$count]->id_barang, $generator::TYPE_CODE_128)) . '">';                                    
                                                  /*
                                                  $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                                                  echo $generator->getBarcode($barangs->id_barang, $generator::TYPE_CODE_128);
                                                  */
-                        ?>
-                             <br>
-                             <?='('.$i.','.$col.')'.$barangs->id_barang?>
-                             <br>
-                             <?= $barangs->nama_barang?>
-                             <br>
-                             <?php $col++;?>
-                     </div>
-                     @endif
-                     </div>
-                     <br>
-                    </td>
-                    @else
-                    <?php $col=1; ?>
-                    @endif
-                    @else
-                    @endif
-                    @if($break == $stop)
-                    <?php $count= $stop;$break=0;?>
-                    @break
-                    @else
-                    @endif
-                    <?php $break++;?>
-                @endforeach
-            </tr>
-            <?php }; ?>
-        </table>
-    </div>
+                        ?><br>
+                        {{ $barang[$count]->id_barang }}
+        <br>
+		{{ $barang[$count]->nama }}
+		</div>
+		<?php $count++; ?>
+		@else
+		<div style="width: 130px;height: 53px;margin-right: 15px;margin-bottom: 16px;"><br></div>
+		@endif
+	    </td>
+	    @if($count == $max)
+	    @break
+	    @endif
+	    @endfor
+	</tr>
+	@if($count == $max)
+	@break
+	@endif
+	@endfor
+    </table>
+
+    <script>
+	window.print();
+    </script>
 </body>
 </html>

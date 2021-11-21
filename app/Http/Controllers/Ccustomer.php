@@ -10,6 +10,7 @@ use App\Models\ec_districts;
 use App\Models\ec_cities;
 use App\Models\ec_provinces;
 use App\Models\customer;
+use App\Imports\CcustomerImport;
 
 class Ccustomer extends Controller
 {
@@ -28,6 +29,29 @@ class Ccustomer extends Controller
         compact('ec_districts'),
         compact('ec_cities'),
         compact('ec_provinces'));
+    }
+
+    public function importExcel(Request $request)
+    {
+        // validasi
+		$this->validate($request, [
+			'excel' => 'required|mimes:xls,xlsx'
+		]);
+        if($request->excel){
+               // menangkap file excel
+                $file = $request->file('excel')->store('import');
+                // import data
+                $import = new CcustomerImport;
+                $import->import($file);
+                //dd($import->failures());
+                if($import->failures()) {
+                    return back()->withFailures($import->failures());
+                }
+                //dd($import->errors());
+                //(new CustomerImport)->import($file);
+                // alihkan halaman kembali
+                return back()->withStatus('file excel is success imported');
+        }
     }
 
     public function tambahCustomer1()
