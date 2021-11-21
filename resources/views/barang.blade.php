@@ -25,7 +25,7 @@
             <tr>
                 <td>ID</td>
                 <td>Nama Barang</td>
-                <td align="center">
+                <td align="left">
                       <input name="select_all" value="" id="select_all" type="checkbox" /></th>
                 </td>
             </tr>
@@ -39,7 +39,7 @@
                     echo $b->id_barang;
                     ?></td>
                 <td>{{ $b->nama }}</td>
-                <td align="center"><input type="checkbox" class="select" value="{{ $b->id_barang }}"></td>
+                <td align="left"><input type="checkbox" class="select" value="{{ $b->id_barang }}"></td>
             
             </tr>
             @endforeach
@@ -57,31 +57,32 @@
 
 <!-- Modal -->
 <div class="modal fade" id="printModal">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-						<form method="post" id="form" action="{{ url('/printBarcode') }}" target="_blank">
-						@csrf
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Cetak</h5>
-                                                        <button type="button" class="close" data-bs-dismiss="modal"><span>&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                        	    	<div class="form-group">
-                                            		    <input type="text" class="form-control input-default" id="kolom" name="kolom" placeholder="Kolom" required>
-                                        		</div>
-                                        		<div class="form-group">
-                                                	    <input type="text" class="form-control input-default" id="baris" name="baris" placeholder="Baris" required>
-                                        		</div>
-							<input type="hidden" id="barang" name="barang">
-						    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary" id="form">Save changes</button>
-                                                    </div>
-						</form>
-                                            </div>
-                                        </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+		<form method="post" id="form" action="{{ url('/printBarcode') }}" target="_blank">
+		@csrf
+            <div class="modal-header">
+                <h5 class="modal-title">Cetak</h5>
+                <button type="button" class="close" data-bs-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" class="form-control input-default" id="baris" name="baris" placeholder="Baris" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control input-default" id="kolom" name="kolom" placeholder="Kolom" required>
+                </div>
+                                        		
+				<input type="hidden" id="barang" name="barang">
+			</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-info" id="form">Save changes</button>
+            </div>
+		</form>
+        </div>
+    </div>
 </div>
 @endsection
 
