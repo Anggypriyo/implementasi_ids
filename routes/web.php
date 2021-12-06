@@ -18,7 +18,6 @@ use App\Http\Controllers\Ctoko;
 */
 
 Route::get('/', [Cblank_page::class,'index']);
-Route::get('/home', [Cblank_page::class,'index']);
 Route::get('/home/index', [Cblank_page::class,'index']);
 
 Route::get('/blank_page', [Cblank_page::class,'index']);
@@ -50,3 +49,8 @@ Route::get('/toko/export/{id}', [Ctoko::class,'export']);
 Route::get('/scan_toko', [Ctoko::class,'indexScan']);
 Route::post('/scan_toko/getLocationToko',[Ctoko::class,'getLocationToko']);
 Route::post('/scan_toko/hasil',[Ctoko::class,'getDistanceFromLatLonInKm']);
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/auth/redirect', [App\Http\Controllers\Auth\LoginController::class, 'redirectToProvider']);
+Route::get('/auth/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleProviderCallback']);
