@@ -85,6 +85,27 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="sidebar-item {{request ()->is('SSE')||request ()->is('scoreboard')||request ()->is('scoreboard-console')? 'active' :'' }}  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i data-feather="map" width="20"></i>
+                                <span>SSE</span>
+                            </a>
+
+                            <ul class="submenu {{request ()->is('sse')||request ()->is('scoreboard')||request ()->is('scoreboard-console') ? 'active' :'' }}">
+                            <!-- <ul class=submenu active"> -->
+
+                                <li  class="submenu-item {{request ()->is('sse') ? 'active' :'' }}">
+                                    <a href="{{url('/sse')}}">Data SSE</a>
+                                </li>
+
+                                <li class="submenu-item {{request ()->is('scoreboard') ? 'active' :'' }}">
+                                    <a href="{{url('/scoreboard')}}">ScoreBoard</a>
+                                </li>
+                                <li class="submenu-item {{request ()->is('scoreboard-console') ? 'active' :'' }}">
+                                    <a href="{{url('/scoreboard-console')}}">ScoreBoard Console</a>
+                                </li>
+                            </ul>
+                        </li>
 
                     </ul>
                 </div>

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@include('layout.css_global')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -26,3 +26,4 @@
     </div>
 </div>
 @endsection
+@include('layout.js_global')

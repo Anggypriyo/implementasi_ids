@@ -26,11 +26,6 @@ class CcustomerImport implements
     WithBatchInserts
 {
     use Importable,SkipsErrors,SkipsFailures;
-    /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
     public function model(array $row)
     {
         return new customer([
