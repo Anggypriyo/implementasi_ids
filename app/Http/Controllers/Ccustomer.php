@@ -11,6 +11,7 @@ use App\Models\ec_cities;
 use App\Models\ec_provinces;
 use App\Models\customer;
 use App\Imports\CcustomerImport;
+use Illuminate\Support\Facades\Http;
 
 class Ccustomer extends Controller
 {
@@ -22,6 +23,27 @@ class Ccustomer extends Controller
         $ec_districts = ec_districts::all();
         $ec_cities = ec_cities::all();
         $ec_provinces = ec_provinces::all();
+        $url = 'https://apicybercampus.unair.ac.id/api/tele/coba2';
+
+        // $ch = curl_init();
+
+        // curl_setopt($ch, CURLOPT_URL, $url);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        // curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 300);
+        // curl_setopt($ch, CURLOPT_TIMEOUT, 300);
+
+        // $server_output = curl_exec($ch);
+        // curl_close($ch);
+
+        // $arrVal = json_decode($server_output, true);
+
+        // // echo $server_output."<br><br>";
+
+        // // print_r($arrVal);
+        // dd($arrVal);
+        //$response = Http::get('https://apicybercampus.unair.ac.id/api/tele/coba2');
+        //Http:dd()->get('https://apicybercampus.unair.ac.id/api/tele/coba2');
+        //$response = json_decode($response);
         //mengirim data ke view table
         return view('customer',
         compact('customer'),

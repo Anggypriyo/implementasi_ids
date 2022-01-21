@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CcustomerAPI;
+use App\Http\Controllers\API\MobileController;
+// use App\Http\Controllers\MobileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('/customers',CcustomerAPI::class);
+Route::resource('mobiles',MobileController::class);
+//Route::resource('/api/mobiles',MobileController::class);

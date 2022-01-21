@@ -8,6 +8,12 @@ use App\Http\Controllers\Ctoko;
 use App\Http\Controllers\Csse;
 use App\Http\Controllers\Cscoreboard;
 
+// use App\Http\Controllers\API\MobileController;
+// use App\Http\Controllers\API\Movie0Controller;
+// use App\Http\Controllers\API\Movie1Controller;
+// use App\Http\Controllers\API\Movie2Controller;
+// use App\Http\Controllers\API\M_pemesananController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -78,3 +84,10 @@ Route::post('/scoreboard-console/reset-away-foul',[Cscoreboard::class,'resetAway
 Route::post('/scoreboard-console/update-home-status',[Cscoreboard::class,'updateHomeStatus']);
 Route::post('/scoreboard-console/update-timer',[Cscoreboard::class,'updateTimer']);
 Route::post('/update-menit-detik',[Cscoreboard::class,'update_menit_detik']);
+
+// Route::resource('/api/mobiles',MobileController::class);
+// Route::resource('/api/moviesnowplaying',Movie1Controller::class);
+// Route::resource('/api/moviesbrowse',Movie0Controller::class);
+// Route::resource('/api/moviescomingsoon',Movie2Controller::class);
+// Route::resource('/api/m_pemesanan',M_pemesananController::class);
+
